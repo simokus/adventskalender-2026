@@ -212,7 +212,7 @@ function renderMeine(main) {
   main.appendChild(form);
 
   const ws = wishesOf(state, me);
-  main.appendChild(el('h2', null, 'Deine ' + ws.length + ' Wünsche'));
+  main.appendChild(el('h2', null, 'Deine Wünsche (' + ws.length + ')'));
   for (const w of ws) {
     const card = wishCard(w, me, {});
     const del = el('button', 'ghost', 'löschen');
