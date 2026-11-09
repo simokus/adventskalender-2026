@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adventskalender 2026</title>
+<style>
+  :root{
+    --bg:#0e1511; --card:#17211c; --card2:#1d2a23; --line:#2a3a31;
+    --text:#eef3ef; --dim:#9fb3a7; --gold:#e3c178; --red:#d9534f; --green:#4caf7d;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    padding:0 16px 48px;max-width:720px;margin:0 auto}
+  header{padding:24px 0 8px;text-align:center}
+  h1{font-size:26px;margin:0 0 4px;color:var(--gold);letter-spacing:.5px}
+  .sub{color:var(--dim);font-size:14px;margin:0}
+  h2{font-size:18px;margin:28px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+  .bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center;margin:16px 0}
+  .tabs{display:flex;gap:6px;margin:16px 0;background:var(--card);padding:4px;border-radius:12px}
+  .tabs button{flex:1;background:none;border:0;color:var(--dim);padding:10px 6px;border-radius:9px;font-size:14px;cursor:pointer}
+  .tabs button.on{background:var(--card2);color:var(--text);box-shadow:0 1px 0 #0005}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0}
+  .card.day{border-left:3px solid var(--gold)}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .daynum{background:var(--gold);color:#17211c;font-weight:700;font-size:13px;padding:2px 10px;border-radius:999px}
+  .badge{font-size:12px;padding:2px 9px;border-radius:999px;border:1px solid var(--line);color:var(--dim)}
+  .badge.budget{color:var(--gold);border-color:#4a3f26}
+  .badge.taken{color:var(--red);border-color:#4a2a29}
+  .badge.done{color:var(--green);border-color:#27443a}
+  .note{color:var(--dim);font-size:14px;margin-top:6px}
+  .hint{color:var(--dim);font-size:13px}
+  .link{display:inline-block;margin-top:8px;color:#8fc7ff;font-size:13px;word-break:break-all}
+  input,select{width:100%;margin:6px 0;padding:11px;border-radius:10px;border:1px solid var(--line);
+    background:#0f1713;color:var(--text);font-size:15px}
+  button{font-family:inherit}
+  button.primary{width:100%;margin-top:8px;padding:12px;border:0;border-radius:10px;
+    background:var(--red);color:#fff;font-size:15px;font-weight:600;cursor:pointer}
+  button.ghost{margin-top:10px;background:none;border:1px solid var(--line);color:var(--dim);
+    padding:6px 12px;border-radius:9px;font-size:13px;cursor:pointer}
+  button.person{display:block;width:100%;margin:8px 0;padding:16px;font-size:17px;border-radius:12px;
+    border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer}
+  .check{display:flex;gap:8px;align-items:center;margin-top:10px;font-size:14px;color:var(--dim)}
+  .check input{width:auto;margin:0}
+  #status{min-height:18px;text-align:center;font-size:13px;color:var(--red)}
+  .mini{background:none;border:1px solid var(--line);color:var(--dim);padding:5px 10px;border-radius:8px;font-size:12px;cursor:pointer}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎄 Adventskalender 2026</h1>
+  <p class="sub">24 Tage, 24 Päckchen — Wunschliste &amp; Planung</p>
+</header>
+
+<div id="login" hidden>
+  <p class="hint" style="text-align:center">Wer bist du?</p>
+  <div id="loginBox"></div>
+  <p class="hint" style="text-align:center">Beim ersten Mal wählst du selbst einen 4-stelligen PIN.</p>
+</div>
+
+<div id="app" hidden>
+  <div class="bar">
+    <span class="hint">Angemeldet als <strong id="who"></strong></span>
+    <button class="mini" id="reload">aktualisieren</button>
+    <button class="mini" id="export">Backup</button>
+    <button class="mini" id="logout">wechseln</button>
+  </div>
+  <div class="tabs">
+    <button data-tab="liste">Wunschliste</button>
+    <button data-tab="meine">Meine Wünsche</button>
+    <button data-tab="geschenke">Meine Geschenke</button>
+  </div>
+  <div id="status"></div>
+  <div id="main"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
