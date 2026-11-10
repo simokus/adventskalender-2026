@@ -1,7 +1,10 @@
 # 🎄 Adventskalender 2026
 
 Wunschliste & Geschenk-Planung für Simon, Ilina, Patrizia und Patrick.
-24 Tage, 24 Päckchen — wer wem schenkt, steht schon fest (jeder beschenkt jeden zweimal).
+24 Tage, 24 Päckchen — wer wem schenkt, steht schon fest: die vier kommen reihum dran
+(Tag 1 Simon, 2 Ilina, 3 Patrizia, 4 Patrick, dann von vorn), und pro Person rotieren
+die drei Schenkenden der Reihe nach durch — vom selben Menschen bekommt man also genau
+alle 12 Tage ein Päckchen. Die Tabelle steht in `Adventskalender_2026.pdf`.
 
 **Live:** https://simokus.github.io/adventskalender-2026/
 
@@ -20,6 +23,9 @@ geladen und gemerged; alle 20 s wird aktualisiert. **Backup**-Knopf lädt den ak
 Stand als JSON herunter.
 
 Logik-Check: `node test.js`
+
+Das PDF-Blatt neu erzeugen (liest die Zuteilung aus `app.js`, druckt per Chrome):
+`node make-pdf.js`
 
 ## Grenzen (bewusst so)
 

@@ -14,6 +14,20 @@ for (const p of PEOPLE) {
   }
 }
 
+// Rotation: jede Person bekommt der Reihe nach von den drei anderen,
+// also vom selben Menschen genau alle 12 Tage.
+for (const p of PEOPLE) {
+  const got = DAYS.filter(d => d.to === p);
+  assert.deepStrictEqual(got.map(d => d.day), [0, 1, 2, 3, 4, 5].map(i => PEOPLE.indexOf(p) + 1 + i * 4));
+  const first3 = got.slice(0, 3).map(d => d.from);
+  assert.strictEqual(new Set(first3).size, 3, p + ': erste drei Paeckchen nicht von drei verschiedenen');
+  assert.deepStrictEqual(got.slice(3).map(d => d.from), first3, p + ': Reihenfolge wiederholt sich nicht');
+  for (const d of got.slice(0, 3)) {
+    const same = got.filter(x => x.from === d.from).map(x => x.day);
+    assert.strictEqual(same[1] - same[0], 12, p + ' <- ' + d.from + ': Abstand nicht 12 Tage');
+  }
+}
+
 // Reservierungen
 const state = {
   wishes: [{ id: 'a', owner: 'Ilina' }, { id: 'b', owner: 'Ilina' }, { id: 'c', owner: 'Simon' }],

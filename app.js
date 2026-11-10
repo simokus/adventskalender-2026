@@ -2,15 +2,16 @@
 
 const PEOPLE = ['Simon', 'Ilina', 'Patrizia', 'Patrick'];
 
-// Tag -> [Beschenkte Person, Schenkende Person]  (fix laut Adventskalender-Plan)
-const DAYS = [
-  [1, 'Simon', 'Patrick'], [2, 'Ilina', 'Simon'], [3, 'Patrizia', 'Ilina'], [4, 'Patrick', 'Patrizia'],
-  [5, 'Simon', 'Patrizia'], [6, 'Ilina', 'Patrick'], [7, 'Patrizia', 'Simon'], [8, 'Patrick', 'Ilina'],
-  [9, 'Simon', 'Ilina'], [10, 'Ilina', 'Patrizia'], [11, 'Patrizia', 'Patrick'], [12, 'Patrick', 'Simon'],
-  [13, 'Simon', 'Patrizia'], [14, 'Ilina', 'Patrick'], [15, 'Patrizia', 'Simon'], [16, 'Patrick', 'Ilina'],
-  [17, 'Simon', 'Ilina'], [18, 'Ilina', 'Patrizia'], [19, 'Patrizia', 'Patrick'], [20, 'Patrick', 'Simon'],
-  [21, 'Simon', 'Patrick'], [22, 'Ilina', 'Simon'], [23, 'Patrizia', 'Ilina'], [24, 'Patrick', 'Patrizia'],
-].map(([day, to, from]) => ({ day, to, from }));
+// Tag -> { Tag, Beschenkte(r), Schenkende(r) }
+// Reihum: Tag 1 Simon, 2 Ilina, 3 Patrizia, 4 Patrick, dann wieder von vorn.
+// Pro Beschenkter rotieren die drei anderen der Reihe nach durch -> vom selben
+// Menschen bekommt man nur alle 12 Tage ein Paeckchen. Der Versatz (+r) verteilt
+// die Einkaeufe, damit niemand drei Tage hintereinander schenken muss.
+const DAYS = [...Array(24)].map((_, i) => {
+  const r = i % 4, n = (i / 4) | 0;
+  const to = PEOPLE[r];
+  return { day: i + 1, to, from: PEOPLE.filter(p => p !== to)[(n + r) % 3] };
+});
 
 // ---- reine Logik (von test.js geprüft) ----
 
@@ -92,12 +93,20 @@ async function init() {
   window.addEventListener('focus', () => refresh(false));
 }
 
-async function refresh(showErr) {
+/** Tippt gerade jemand? render() baut das Formular neu auf und wuerfe das Getippte weg. */
+function typing() {
+  const a = document.activeElement;
+  if (a && /^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName)) return true;
+  return [...document.querySelectorAll('#main input')].some(i => i.type !== 'checkbox' && i.value);
+}
+
+async function refresh(manual) {
+  if (!manual && typing()) return;
   try {
     state = await fetchState();
     status('');
   } catch (e) {
-    if (showErr) status('⚠ ' + e.message);
+    if (manual) status('⚠ ' + e.message);
   }
   render();
 }
